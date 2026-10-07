@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">terminuke</string>
+    <string name="notification_channel">SSH session</string>
+    <string name="notification_active">SSH session active</string>
+</resources>

@@ -1,0 +1,43 @@
+# Gradle and Kotlin generated state
+.gradle/
+.kotlin/
+**/build/
+local.properties
+
+# Internal ICM workflow/template files — keep the Android app repo code-only
+/_config/
+/shared/
+/stages/
+/AGENTS.md
+/CONTEXT.md
+
+# Android Studio / IntelliJ user state
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local signing material and secrets — never commit private keys
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+keystore.properties
+signing.properties
+google-services.json
+.env
+.env.*
+!.env.example
+
+# Generated packages, crash dumps, logs, and OS files
+*.apk
+*.aab
+*.ap_
+*.dex
+*.hprof
+*.log
+.DS_Store
+Thumbs.db

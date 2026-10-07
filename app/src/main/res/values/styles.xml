@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.Terminuke" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#80CBC4</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#101411</item>
+        <item name="android:navigationBarColor">#101411</item>
+        <item name="android:windowBackground">#101411</item>
+    </style>
+</resources>

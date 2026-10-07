@@ -2,6 +2,7 @@ package com.terminuke.app
 
 import android.app.Application
 import androidx.room.Room
+import com.terminuke.app.crypto.AndroidCryptoProvider
 import com.terminuke.app.crypto.CryptoManager
 import com.terminuke.app.data.HostRepository
 import com.terminuke.app.data.KeyRepository
@@ -15,6 +16,7 @@ class TerminukeApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AndroidCryptoProvider.install()
         container = AppContainer(this)
     }
 }

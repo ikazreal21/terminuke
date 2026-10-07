@@ -1,6 +1,7 @@
 package com.terminuke.app.data
 
 import android.util.Base64
+import com.terminuke.app.crypto.AndroidCryptoProvider
 import com.terminuke.app.crypto.CryptoManager
 import com.terminuke.app.data.db.KeyDao
 import com.terminuke.app.data.db.SshKeyEntity
@@ -10,7 +11,6 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 import java.security.KeyPairGenerator
-import java.security.Security
 import java.security.interfaces.RSAPublicKey
 import java.util.UUID
 
@@ -18,7 +18,7 @@ class KeyRepository(private val dao: KeyDao, private val crypto: CryptoManager) 
     fun observe(): Flow<List<SshKeyEntity>> = dao.observeKeys()
 
     suspend fun generateEd25519(name: String): SshKeyEntity {
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) Security.addProvider(BouncyCastleProvider())
+        AndroidCryptoProvider.install()
         val pair = KeyPairGenerator.getInstance("Ed25519", BouncyCastleProvider.PROVIDER_NAME).generateKeyPair()
         val alias = UUID.randomUUID().toString()
         val privatePem = pem("PRIVATE KEY", pair.private.encoded)
@@ -33,7 +33,7 @@ class KeyRepository(private val dao: KeyDao, private val crypto: CryptoManager) 
 
     suspend fun generateRsa(name: String, bits: Int = 3072): SshKeyEntity {
         require(bits in setOf(2048, 3072, 4096)) { "Choose an RSA key size of 2048, 3072, or 4096 bits." }
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) Security.addProvider(BouncyCastleProvider())
+        AndroidCryptoProvider.install()
         val pair = KeyPairGenerator.getInstance("RSA", BouncyCastleProvider.PROVIDER_NAME).apply { initialize(bits) }.generateKeyPair()
         val alias = UUID.randomUUID().toString()
         val privatePem = pem("PRIVATE KEY", pair.private.encoded)

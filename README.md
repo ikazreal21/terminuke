@@ -4,6 +4,12 @@ A free, local-first Android SSH terminal. terminuke keeps saved hosts and SSH ke
 
 > **Early development:** the debug APK builds, but has not yet been exercised on a physical Android device or against a real SSH server. Review `docs/manual-test-checklist.md` before relying on it for important connections.
 
+## Preview
+
+![terminuke host archive preview](docs/images/host-archive-preview.svg)
+
+*Vector preview based on the supplied device screen.*
+
 ## What it does
 
 - Save, edit, search, and remove SSH hosts locally.
@@ -14,7 +20,7 @@ A free, local-first Android SSH terminal. terminuke keeps saved hosts and SSH ke
 - Export/import hosts as JSON. Passwords and private key material are not included.
 - Keep an active SSH connection in a foreground service with an ongoing notification and Disconnect action.
 
-The MVP is single-session, Android-only, and dark-themed. SFTP, port forwarding, multiple tabs, cloud sync, and hardware security keys are not included.
+The MVP is single-session and Android-only. The host archive uses warm paper and graphite surfaces; the live terminal stays dark for contrast. SFTP, port forwarding, multiple tabs, cloud sync, and hardware security keys are not included.
 
 ## Requirements
 

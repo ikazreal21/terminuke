@@ -5,10 +5,25 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import java.io.File
 import java.security.KeyStore
+import java.security.Provider
+import java.security.Security
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+
+object AndroidCryptoProvider {
+    @Synchronized
+    fun install() {
+        val installed: Provider? = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
+        if (installed?.javaClass?.name == BouncyCastleProvider::class.java.name) return
+
+        // Android's bundled BC provider is older and may lack X25519, which SSHJ uses for key exchange.
+        Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
+        Security.addProvider(BouncyCastleProvider())
+    }
+}
 
 class CryptoManager(context: Context) {
     private val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }

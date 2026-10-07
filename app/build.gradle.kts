@@ -1,8 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+}
+
+val releaseSigningPropertiesPath = System.getenv("TERMINUKE_SIGNING_PROPERTIES") ?: "app/release-signing.properties"
+val releaseSigningPropertiesFile = rootProject.file(releaseSigningPropertiesPath)
+val releaseSigningProperties = Properties().apply {
+    if (releaseSigningPropertiesFile.exists()) {
+        releaseSigningPropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -14,7 +24,7 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "0.1.0"
+        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,6 +32,16 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (releaseSigningPropertiesFile.exists()) {
+                signingConfigs.create("localRelease") {
+                    storeFile = rootProject.file(releaseSigningProperties.getProperty("storeFile"))
+                    storePassword = releaseSigningProperties.getProperty("storePassword")
+                    keyAlias = releaseSigningProperties.getProperty("keyAlias")
+                    keyPassword = releaseSigningProperties.getProperty("keyPassword")
+                }
+            } else {
+                null
+            }
         }
     }
 

@@ -27,6 +27,8 @@ captures/
 *.key
 keystore.properties
 signing.properties
+release-signing.properties
+/app/release-signing.properties
 google-services.json
 .env
 .env.*
